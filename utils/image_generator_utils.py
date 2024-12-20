@@ -100,10 +100,10 @@ def download_image(url, save_path):
             with open(save_path, 'rb') as file:
                 myfile = file.read()
             st.image(myfile)
-            st.info("Image downloaded successfully.")
+            st.info("Image saved successfully.")
             return myfile
         else:
-            st.warning("Failed to download image because of network issue")
+            st.warning("Failed to save image because of network issue")
     except Exception as e:
         st.info("Error:" + str(e))
 
