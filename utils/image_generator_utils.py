@@ -6,12 +6,13 @@ from PIL import Image
 import requests
 import streamlit as st
 from openai import OpenAI
-
+from utils.account_settings import get_api_key
 
 class Chatbot():
     def __init__(self):
+        self.api_key = get_api_key()
         self.client = OpenAI(
-            api_key=st.secrets.TAF_API_KEY
+            api_key=self.api_key
         )
 
 
@@ -21,6 +22,17 @@ class Chatbot():
             prompt=user_input,
             size=size,
             quality=quality,
+            n=1,
+        )
+        image_url = response.data[0].url
+        return image_url
+    
+    def get_image_dall_e2(self, user_input, size, style):
+        response = self.client.images.generate(
+            model='dall-e-2',
+            prompt=user_input,
+            size=size,
+            style=style,
             n=1,
         )
         image_url = response.data[0].url
